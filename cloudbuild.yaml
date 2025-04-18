@@ -2,23 +2,26 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
+  # Step 1: Build the project using Maven
   - name: 'gcr.io/cloud-builders/mvn'
     args: ['clean', 'install', '-DskipTests']
     dir: '.'
 
+  # Step 2: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
       '-t',
-      'us-central1-docker.pkg.dev/moon-tracker/integration/integration-service:1.0.0',
+      'us-central1-docker.pkg.dev/moon-tracker-456917/integration/integration-service:1.0.0',
       '.'
     ]
 
+  # Step 3: Push the image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      'us-central1-docker.pkg.dev/moon-tracker/integration/integration-service:1.0.0'
+      'us-central1-docker.pkg.dev/moon-tracker-456917/integration/integration-service:1.0.0'
     ]
 
 images:
-  - 'us-central1-docker.pkg.dev/moon-tracker/integration/integration-service:1.0.0'
+  - 'us-central1-docker.pkg.dev/moon-tracker-456917/integration/integration-service:1.0.0'
